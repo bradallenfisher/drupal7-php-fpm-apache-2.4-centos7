@@ -21,7 +21,7 @@ systemctl start  mysqld.service
 # php
 yum install -y php56w php56w-fpm php56w-opcache php56w-cli php56w-common php56w-gd php56w-mbstring php56w-mcrypt php56w-pecl-apcu php56w-pdo php56w-xml php56w-mysqlnd
 # fix date timezone errors
-sed -i 's/;date.timezone=/date.timezone ="America/New York"/g' /etc/php.ini
+sed -i 's#;date.timezone =#date.timezone ="America/New York"#g' /etc/php.ini
 systemctl enable php-fpm.service
 systemctl start php-fpm.service
 
