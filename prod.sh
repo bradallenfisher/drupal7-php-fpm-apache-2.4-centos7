@@ -23,6 +23,9 @@ sed -i 's#;date.timezone =#date.timezone ="America/New York"#g' /etc/php.ini
 systemctl enable php-fpm.service
 systemctl start php-fpm.service
 
+# varnish
+## todo -->
+
 #add the ProxyPassMatch
 sed -i 's/IncludeOptional conf/#IncludeOptional conf/g' /etc/httpd/conf/httpd.conf
 cat << EOF >> /etc/httpd/conf/httpd.conf
