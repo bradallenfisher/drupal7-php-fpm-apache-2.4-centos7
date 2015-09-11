@@ -43,7 +43,7 @@ curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
 
-cat ht.conf > /etc/httpd/conf.d/ht.conf
+cat htaccess.conf > /etc/httpd/conf.d/htaccess.conf
 cat www.conf > /etc/php-fpm.d/www.conf
 cat 00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
 cat 00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
