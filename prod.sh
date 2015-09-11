@@ -28,15 +28,6 @@ systemctl start php-fpm.service
 rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
 yum install -y varnish
 
-#add the ProxyPassMatch
-sed -i 's/IncludeOptional conf/#IncludeOptional conf/g' /etc/httpd/conf/httpd.conf
-cat << EOF >> /etc/httpd/conf/httpd.conf
-<IfModule proxy_module>
-  ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/html/$1
-</IfModule>
-IncludeOptional conf.d/*.conf
-EOF
-
 #comment out the addHandler mod_php stuff
 sed -i 's/AddHandler php5-script .php/#AddHandler php5-script .php/g' /etc/httpd/conf.d/php.conf
 sed -i 's/AddType text/#AddType text/g' /etc/httpd/conf.d/php.conf
@@ -47,6 +38,7 @@ ln -s /usr/local/bin/composer /usr/bin/composer
 
 cat htaccess.conf > /etc/httpd/conf.d/htaccess.conf
 cat www.conf > /etc/php-fpm.d/www.conf
+cat proxy.conf > /etc/php-fpm.d/proxy.conf
 cat 00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
 cat 00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
 cat 00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
@@ -54,6 +46,7 @@ cat 00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
+cat proxy.conf > /etc/httpd/conf.d/proxy.conf
 cat opcache.ini > /etc/php.d/opcache.ini
 cat default.vcl > /etc/varnish/default.vcl
 cat varnish.params > /etc/varnish/varnish.params
