@@ -25,6 +25,8 @@ systemctl start php-fpm.service
 
 # varnish
 ## todo -->
+rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
+yum install -y varnish
 
 #add the ProxyPassMatch
 sed -i 's/IncludeOptional conf/#IncludeOptional conf/g' /etc/httpd/conf/httpd.conf
@@ -53,6 +55,7 @@ cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
 cat opcache.ini > /etc/php.d/opcache.ini
+cat default.vcl > /etc/varnish/default.vcl
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
