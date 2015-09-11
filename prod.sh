@@ -47,7 +47,7 @@ cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
 cat php.conf > /etc/httpd/conf.d/php.conf
-cat proxy.conf > /etc/httpd/conf.d/proxy.conf
+cat php-fpm.conf > /etc/httpd/conf.d/php-fpm.conf
 cat opcache.ini > /etc/php.d/opcache.ini
 cat default.vcl > /etc/varnish/default.vcl
 cat varnish.params > /etc/varnish/varnish.params
