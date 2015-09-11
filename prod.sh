@@ -41,6 +41,7 @@ sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
 
 cat ht.conf > /etc/httpd/conf.d/ht.conf
+cat www.conf > /etc/php-fpm.d/www.conf
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
