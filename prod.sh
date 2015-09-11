@@ -51,5 +51,7 @@ cat opcache.ini > /etc/php.d/opcache.ini
 cat default.vcl > /etc/varnish/default.vcl
 cat varnish.params > /etc/varnish/varnish.params
 
+sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf.d/php.conf
+
 systemctl restart httpd.service
 systemctl restart php-fpm.service
