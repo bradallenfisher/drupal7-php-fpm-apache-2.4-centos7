@@ -42,6 +42,13 @@ ln -s /usr/local/bin/composer /usr/bin/composer
 
 cat ht.conf > /etc/httpd/conf.d/ht.conf
 cat www.conf > /etc/php-fpm.d/www.conf
+cat 00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
+cat 00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
+cat 00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
+cat 00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
+cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
+cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
+cat security.conf > /etc/httpd/conf.d/security.conf
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
