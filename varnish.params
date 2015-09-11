@@ -22,7 +22,7 @@ VARNISH_SECRET_FILE=/etc/varnish/secret
 
 # Backend storage specification, see Storage Types in the varnishd(5)
 # man page for details.
-VARNISH_STORAGE="file,/var/lib/varnish/varnish_storage.bin,1G"
+VARNISH_STORAGE="malloc,1G"
 
 # Default TTL used when the backend does not specify one
 VARNISH_TTL=120
