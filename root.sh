@@ -1,3 +1,7 @@
+#!/bin/bash
+
+#not on prod obviously.
+sudo systemctl stop firewalld.service
 # install apache
 yum install nano vim wget curl git httpd -y
 
