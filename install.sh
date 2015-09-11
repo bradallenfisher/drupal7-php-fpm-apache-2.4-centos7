@@ -13,3 +13,6 @@ yum update -y
 yum install mysql-community-server -y
 systemctl enable mysqld.service
 systemctl start  mysqld.service
+
+# php
+yum install -y php56w-fpm
