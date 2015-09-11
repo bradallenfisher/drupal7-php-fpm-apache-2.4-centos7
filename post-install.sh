@@ -19,6 +19,7 @@ sudo chown -R apache:apache /var/www/html/sites/default/files/
 
 drush cleanup -y
 drush cook d7adminux -y
+drush cook d7adminux -y
 exec bash
 
 echo "DUNZY!"
