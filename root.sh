@@ -45,7 +45,7 @@ cat /vagrant/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat /vagrant/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat /vagrant/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat /vagrant/security.conf > /etc/httpd/conf.d/security.conf
-cat /vagrant/proxy.conf > /etc/httpd/conf.d/proxy.conf
+cat /vagrant/php-fpm.conf > /etc/httpd/conf.d/php-fpm.conf
 cat /vagrant/opcache.ini > /etc/php.d/opcache.ini
 
 #sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf.d/php.conf
