@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#not on prod obviously.
-sudo systemctl stop firewalld.service
 # install apache
 yum install nano vim wget curl git httpd -y
 
@@ -25,24 +23,32 @@ sed -i 's#;date.timezone =#date.timezone ="America/New York"#g' /etc/php.ini
 systemctl enable php-fpm.service
 systemctl start php-fpm.service
 
-#add the ProxyPassMatch
-sed -i 's/IncludeOptional conf/#IncludeOptional conf/g' /etc/httpd/conf/httpd.conf
-cat << EOF >> /etc/httpd/conf/httpd.conf
-<IfModule proxy_module>
-  ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/html/$1
-</IfModule>
-IncludeOptional conf.d/*.conf
-EOF
-
-#comment out the addHandler mod_php stuff
-sed -i 's/AddHandler php5-script .php/#AddHandler php5-script .php/g' /etc/httpd/conf.d/php.conf
-sed -i 's/AddType text/#AddType text/g' /etc/httpd/conf.d/php.conf
+# varnish
+## uncomment if you want to test varnish -->
+#rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
+#yum install -y varnish
+#cat default.vcl > /etc/varnish/default.vcl
+#cat varnish.params > /etc/varnish/varnish.params
 
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
 
-cat /vagrant/ht.conf > /etc/httpd/conf.d/ht.conf
+cat /vagrant/htaccess.conf > /etc/httpd/conf.d/htaccess.conf
+cat /vagrant/www.conf > /etc/php-fpm.d/www.conf
+cat /vagrant/proxy.conf > /etc/php-fpm.d/proxy.conf
+cat /vagrant/php.conf > /etc/httpd/conf.d/php.conf
+cat /vagrant/00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
+cat /vagrant/00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
+cat /vagrant/00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
+cat /vagrant/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
+cat /vagrant/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
+cat /vagrant/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
+cat /vagrant/security.conf > /etc/httpd/conf.d/security.conf
+cat /vagrant/proxy.conf > /etc/httpd/conf.d/proxy.conf
+cat /vagrant/opcache.ini > /etc/php.d/opcache.ini
+
+#sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf.d/php.conf
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
