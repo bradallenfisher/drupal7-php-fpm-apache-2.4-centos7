@@ -42,7 +42,7 @@ curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
 
-cat /vagrant/ht.conf > /etc/httpd/conf.d/ht.conf
+cat ht.conf > /etc/httpd/conf.d/ht.conf
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
