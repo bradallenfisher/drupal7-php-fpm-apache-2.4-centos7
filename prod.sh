@@ -56,6 +56,7 @@ cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
 cat opcache.ini > /etc/php.d/opcache.ini
 cat default.vcl > /etc/varnish/default.vcl
+cat varnish.params > /etc/varnish/varnish.params
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
