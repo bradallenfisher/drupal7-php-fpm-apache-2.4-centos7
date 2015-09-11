@@ -49,6 +49,7 @@ cat 00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
+cat opcache.ini > /etc/php.d/opcache.ini
 
 systemctl restart httpd.service
 systemctl restart php-fpm.service
