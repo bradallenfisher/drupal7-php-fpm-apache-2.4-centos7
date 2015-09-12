@@ -25,7 +25,6 @@ yum install -y varnish
 cat default.vcl > /etc/varnish/default.vcl
 cat varnish.params > /etc/varnish/varnish.params
 cat www.conf > /etc/php-fpm.d/www.conf
-cat proxy.conf > /etc/php-fpm.d/proxy.conf
 cat opcache.ini > /etc/php.d/opcache.ini
 cat 00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
 cat 00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
