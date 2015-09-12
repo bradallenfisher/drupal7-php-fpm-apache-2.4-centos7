@@ -34,6 +34,7 @@ cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat htaccess.conf > /etc/httpd/conf.d/htaccess.conf
 cat php.conf > /etc/httpd/conf.d/php.conf
+cat compression.conf > /etc/httpd/conf.d/compression.conf
 cat php-fpm.conf > /etc/httpd/conf.d/php-fpm.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
 
