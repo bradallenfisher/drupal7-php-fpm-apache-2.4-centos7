@@ -35,6 +35,11 @@ cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 cat htaccess.conf > /etc/httpd/conf.d/htaccess.conf
 cat php.conf > /etc/httpd/conf.d/php.conf
 cat compression.conf > /etc/httpd/conf.d/compression.conf
+cat content_transformation.conf > /etc/httpd/conf.d/content_transformation.conf
+cat etags.conf > /etc/httpd/conf.d/etags.conf
+cat expires_headers.conf > /etc/httpd/conf.d/expires_headers.conf
+cat file_concatenation.conf > /etc/httpd/conf.d/file_concatenation.conf
+cat filename-based_cache_busting.conf > /etc/httpd/conf.d/filename-based_cache_busting.conf
 cat php-fpm.conf > /etc/httpd/conf.d/php-fpm.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
 
