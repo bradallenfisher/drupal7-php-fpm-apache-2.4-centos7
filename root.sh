@@ -60,3 +60,8 @@ systemctl start httpd.service
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
+
+# blah ... for centos 7 firewall makes apache not serve 80 or 8080... 
+# you should technically edit the firewall rules or use the old iptables setup...
+# If you find my laptop open and/or unattended, I'm probably dead :)* in which case I am already screwed.
+systemctl stop firewalld.service
