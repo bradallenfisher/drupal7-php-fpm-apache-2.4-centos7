@@ -14,11 +14,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # run script as root
   config.vm.provision "shell",
-    path: "root.sh"
+    path: "/vagrant/install/root.sh"
     
   # run script as vagrant user
   config.vm.provision "shell",
-    path: "post-install.sh",
+    path: "/vagrant/install/post-install.sh",
     privileged: FALSE
 
 end
