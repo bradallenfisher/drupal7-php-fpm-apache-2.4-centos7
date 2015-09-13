@@ -6,5 +6,5 @@ git clone https://github.com/bradallenfisher/php-fpm-apache-2.4-centos7.git; cd 
 
 ## PROD
 ```bash
-yum -y install git; git clone https://github.com/bradallenfisher/php-fpm-apache-2.4-centos7.git; cd php-fpm-apache-2.4-centos7; chmod 700 prod.sh; ./prod.sh
+yum -y install git; git clone https://github.com/bradallenfisher/php-fpm-apache-2.4-centos7.git; cd php-fpm-apache-2.4-centos7/intall; chmod 700 prod.sh; ./prod.sh
 ```
