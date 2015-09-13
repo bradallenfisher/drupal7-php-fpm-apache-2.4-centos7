@@ -56,6 +56,7 @@ sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
 
 # our domain config
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
+source domains/domain.sh
 
 # our performance config
 echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
