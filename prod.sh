@@ -32,23 +32,29 @@ cat 00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
 cat 00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
-cat htaccess.conf > /etc/httpd/conf.d/htaccess.conf
 cat php.conf > /etc/httpd/conf.d/php.conf
-cat compression.conf > /etc/httpd/conf.d/compression.conf
-cat content_transformation.conf > /etc/httpd/conf.d/content_transformation.conf
-cat etags.conf > /etc/httpd/conf.d/etags.conf
-cat expires_headers.conf > /etc/httpd/conf.d/expires_headers.conf
-cat file_concatenation.conf > /etc/httpd/conf.d/file_concatenation.conf
-cat filename-based_cache_busting.conf > /etc/httpd/conf.d/filename-based_cache_busting.conf
-cat php-fpm.conf > /etc/httpd/conf.d/php-fpm.conf
+cat compression.conf > /etc/httpd/conf.performance.d/compression.conf
+cat content_transformation.conf > /etc/httpd/conf.performance.d/content_transformation.conf
+cat etags.conf > /etc/httpd/conf.performance.d/etags.conf
+cat expires_headers.conf > /etc/httpd/conf.performance.d/expires_headers.conf
+cat file_concatenation.conf > /etc/httpd/conf.performance.d/file_concatenation.conf
+cat filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
 cat security.conf > /etc/httpd/conf.d/security.conf
 
 
 # Minor config change to main apache file.
+# so varnish can listen
 sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
 
+# our domain config
+echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
+
+#our performance config
+echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
+
+
 # fix date timezone errors
-sed -i 's#;date.timezone =#date.timezone ="America/New York"#g' /etc/php.ini
+sed -i 's#;date.timezone =#date.timezone = "America/New_York"#g' /etc/php.ini
 
 # Make sue services stay on after reboot
 systemctl enable httpd.service
