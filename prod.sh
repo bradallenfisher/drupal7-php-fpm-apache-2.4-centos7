@@ -37,7 +37,7 @@ cat modules/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat modules/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat modules/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 
-#disable mod php
+#disable mod_php
 cat php.conf > /etc/httpd/conf.d/php.conf
 
 # BASIC PERFORMANCE SETTINGS
