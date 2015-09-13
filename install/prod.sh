@@ -21,13 +21,22 @@ yum install -y php56w php56w-fpm php56w-opcache php56w-cli php56w-common php56w-
 rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
 yum install -y varnish
 
-# Add Config accross the instance
-cat default.vcl > /etc/varnish/default.vcl
-cat varnish.params > /etc/varnish/varnish.params
+# VARNISH
+cat varnish/default.vcl > /etc/varnish/default.vcl
+cat varnish/varnish.params > /etc/varnish/varnish.params
+
+# Varnish can listen
+sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
+
+# PHP
 # The first pool
 cat www.conf > /etc/php-fpm.d/www.conf
+
 #opcache settings
-cat opcache.ini > /etc/php.d/opcache.ini
+cat php/opcache.ini > /etc/php.d/opcache.ini
+
+#disable mod_php
+cat php/php.conf > /etc/httpd/conf.d/php.conf
 
 #disable some un-needed modules.
 cat modules/00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
@@ -36,9 +45,6 @@ cat modules/00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
 cat modules/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat modules/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat modules/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
-
-#disable mod_php
-cat php.conf > /etc/httpd/conf.d/php.conf
 
 # BASIC PERFORMANCE SETTINGS
 cat performance/compression.conf > /etc/httpd/conf.performance.d/compression.conf
@@ -49,10 +55,7 @@ cat performance/file_concatenation.conf > /etc/httpd/conf.performance.d/file_con
 cat performance/filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
 
 # BASIC SECURITY SETTINGS
-cat /security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.conf
-
-# Varnish can listen
-sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
+cat security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.conf
 
 # our domain config
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
