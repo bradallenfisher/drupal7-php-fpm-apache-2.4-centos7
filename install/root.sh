@@ -18,50 +18,71 @@ yum install mysql-community-server -y
 yum install -y php56w php56w-fpm php56w-opcache php56w-cli php56w-common php56w-gd php56w-mbstring php56w-mcrypt php56w-pecl-apcu php56w-pdo php56w-xml php56w-mysqlnd
 
 # varnish
-#rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
-#yum install -y varnish
+rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
+yum install -y varnish
 
-# Add Config accross the instance
-#cat default.vcl > /etc/varnish/default.vcl
-#cat varnish.params > /etc/varnish/varnish.params
+# VARNISH
+cat /vagrant/varnish/default.vcl > /etc/varnish/default.vcl
+cat /vagrant/varnish/varnish.params > /etc/varnish/varnish.params
+
+# Varnish can listen
+sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
+
+# PHP
+# The first pool
 cat /vagrant/www.conf > /etc/php-fpm.d/www.conf
-cat /vagrant/opcache.ini > /etc/php.d/opcache.ini
-cat /vagrant/00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
-cat /vagrant/00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
-cat /vagrant/00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
-cat /vagrant/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
-cat /vagrant/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
-cat /vagrant/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
-cat /vagrant/htaccess.conf > /etc/httpd/conf.d/htaccess.conf
-cat /vagrant/php.conf > /etc/httpd/conf.d/php.conf
-cat /vagrant/php-fpm.conf > /etc/httpd/conf.d/php-fpm.conf
-cat /vagrant/security.conf > /etc/httpd/conf.d/security.conf
 
+#opcache settings
+cat /vagrant/php/opcache.ini > /etc/php.d/opcache.ini
 
-# Minor config change to main apache file.
-#sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf.d/httpd.conf
+#disable mod_php
+cat /vagrant/php/php.conf > /etc/httpd/conf.d/php.conf
+
+#disable some un-needed modules.
+cat /vagrant/modules/00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
+cat /vagrant/modules/00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
+cat /vagrant/modules/00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
+cat /vagrant/modules/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
+cat /vagrant/modules/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
+cat /vagrant/modules/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
+
+# BASIC PERFORMANCE SETTINGS
+cat /vagrant/performance/compression.conf > /etc/httpd/conf.performance.d/compression.conf
+cat /vagrant/performance/content_transformation.conf > /etc/httpd/conf.performance.d/content_transformation.conf
+cat /vagrant/performance/etags.conf > /etc/httpd/conf.performance.d/etags.conf
+cat /vagrant/performance/expires_headers.conf > /etc/httpd/conf.performance.d/expires_headers.conf
+cat /vagrant/performance/file_concatenation.conf > /etc/httpd/conf.performance.d/file_concatenation.conf
+cat /vagrant/performance/filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
+
+# BASIC SECURITY SETTINGS
+cat /vagrant/security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.conf
+
+# our domain config
+echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
+source domains/domain.sh
+
+# our performance config
+echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
+
+# our security config
+echo IncludeOptional conf.security.d/*.conf >> /etc/httpd/conf/httpd.conf
 
 # fix date timezone errors
-sed -i 's#;date.timezone =#date.timezone ="America/New York"#g' /etc/php.ini
+sed -i 's#;date.timezone =#date.timezone = "America/New_York"#g' /etc/php.ini
 
 # Make sue services stay on after reboot
 systemctl enable httpd.service
 systemctl enable mysqld.service
 systemctl enable php-fpm.service
-#systemctl enable varnish.service
+systemctl enable varnish.service
 
 # Start all the services we use.
 systemctl start php-fpm.service
 systemctl start  mysqld.service
 systemctl start httpd.service
-#systemctl start varnish.service
+systemctl start varnish.service
 
 # Install Drush globally.
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
-
-# blah ... for centos 7 firewall makes apache not serve 80 or 8080... 
-# you should technically edit the firewall rules or use the old iptables setup...
-# If you find my laptop open and/or unattended, I'm probably dead :)* in which case I am already screwed.
-systemctl stop firewalld.service
