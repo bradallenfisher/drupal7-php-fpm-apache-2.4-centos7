@@ -24,34 +24,44 @@ yum install -y varnish
 # Add Config accross the instance
 cat default.vcl > /etc/varnish/default.vcl
 cat varnish.params > /etc/varnish/varnish.params
+# The first pool
 cat www.conf > /etc/php-fpm.d/www.conf
+#opcache settings
 cat opcache.ini > /etc/php.d/opcache.ini
+
+#disable some un-needed modules.
 cat 00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
 cat 00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
 cat 00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
 cat 00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
 cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
+
+#disable mod php
 cat php.conf > /etc/httpd/conf.d/php.conf
-cat compression.conf > /etc/httpd/conf.performance.d/compression.conf
-cat content_transformation.conf > /etc/httpd/conf.performance.d/content_transformation.conf
-cat etags.conf > /etc/httpd/conf.performance.d/etags.conf
-cat expires_headers.conf > /etc/httpd/conf.performance.d/expires_headers.conf
-cat file_concatenation.conf > /etc/httpd/conf.performance.d/file_concatenation.conf
-cat filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
-cat security.conf > /etc/httpd/conf.d/security.conf
 
+# BASIC PERFORMANCE SETTINGS
+cat performance/compression.conf > /etc/httpd/conf.performance.d/compression.conf
+cat performance/content_transformation.conf > /etc/httpd/conf.performance.d/content_transformation.conf
+cat performance/etags.conf > /etc/httpd/conf.performance.d/etags.conf
+cat performance/expires_headers.conf > /etc/httpd/conf.performance.d/expires_headers.conf
+cat performance/file_concatenation.conf > /etc/httpd/conf.performance.d/file_concatenation.conf
+cat performance/filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
 
-# Minor config change to main apache file.
-# so varnish can listen
+# BASIC SECURITY SETTINGS
+cat /security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.conf
+
+# Varnish can listen
 sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
 
 # our domain config
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
 
-#our performance config
+# our performance config
 echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
 
+# our security config
+echo IncludeOptional conf.security.d/*.conf >> /etc/httpd/conf/httpd.conf
 
 # fix date timezone errors
 sed -i 's#;date.timezone =#date.timezone = "America/New_York"#g' /etc/php.ini
