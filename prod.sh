@@ -30,12 +30,12 @@ cat www.conf > /etc/php-fpm.d/www.conf
 cat opcache.ini > /etc/php.d/opcache.ini
 
 #disable some un-needed modules.
-cat 00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
-cat 00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
-cat 00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
-cat 00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
-cat 00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
-cat 01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
+cat modules/00-base.conf > /etc/httpd/conf.modules.d/00-base.conf
+cat modules/00-dav.conf > /etc/httpd/conf.modules.d/00-dav.conf
+cat modules/00-lua.conf > /etc/httpd/conf.modules.d/00-lua.conf
+cat modules/00-mpm.conf > /etc/httpd/conf.modules.d/00-mpm.conf
+cat modules/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
+cat modules/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 
 #disable mod php
 cat php.conf > /etc/httpd/conf.d/php.conf
