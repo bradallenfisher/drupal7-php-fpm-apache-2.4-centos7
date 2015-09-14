@@ -51,7 +51,7 @@ cat /vagrant/security/apache_default.conf > /etc/httpd/conf.security.d/apache_de
 # our domain config
 mkdir /etc/httpd/conf.sites.d
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
-source /vagrant/domains/domain.sh
+cat /vagrant/domains/80-domain.conf > /etc/httpd/conf.sites.d/test.conf
 
 # our performance config
 echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
