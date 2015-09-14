@@ -17,6 +17,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # virtual box name
   config.vm.provider "virtualbox" do |v|
     v.name = "phpfpm_5-6-apache_2-4"
+    v.memory = 4096
+    v.cpus = 2
   end
 
   # run script as root
