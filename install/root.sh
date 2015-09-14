@@ -17,17 +17,6 @@ yum install mysql-community-server -y
 # php
 yum install -y php56w php56w-fpm php56w-opcache php56w-cli php56w-common php56w-gd php56w-mbstring php56w-mcrypt php56w-pecl-apcu php56w-pdo php56w-xml php56w-mysqlnd
 
-# varnish
-rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el7.rpm
-yum install -y varnish
-
-# VARNISH
-cat /vagrant/varnish/default.vcl > /etc/varnish/default.vcl
-cat /vagrant/varnish/varnish.params > /etc/varnish/varnish.params
-
-# Varnish can listen
-sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
-
 # PHP
 # The first pool
 cat /vagrant/www.conf > /etc/php-fpm.d/www.conf
@@ -74,7 +63,8 @@ sed -i 's#;date.timezone =#date.timezone = "America/New_York"#g' /etc/php.ini
 systemctl enable httpd.service
 systemctl enable mysqld.service
 systemctl enable php-fpm.service
-systemctl enable varnish.service
+
+sudo systemctl stop firewalld.service
 
 # Start all the services we use.
 systemctl start php-fpm.service
