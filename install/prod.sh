@@ -59,7 +59,7 @@ cat security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.con
 
 # our domain config
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
-source domains/domain.sh
+cat domains/8080-domain.conf > /etc/httpd/conf.sites.d/test.conf
 
 # our performance config
 echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
