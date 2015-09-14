@@ -72,7 +72,7 @@ sudo systemctl stop firewalld.service
 # Start all the services we use.
 systemctl start php-fpm.service
 systemctl start  mysqld.service
-systemctl start httpd.service
+# don't start httpd here since there is no .htaccess file yet
 
 # Install Drush globally.
 curl -sS https://getcomposer.org/installer | php
