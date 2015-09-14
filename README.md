@@ -1,8 +1,8 @@
 # php-fpm-apache-2.4
 # Before running this ...
 
-Make sure you uncomment the firewalld cmd to allow you to ssh. :) You can find it on line 75 of /install/prod.sh
-Or disable firewalld.
+I recommend updating your ssh port and also changing the firewalld rules in prod.sh 
+You can find it on line 75 of /install/prod.sh
 
 ## Vagrant
 ```bash
