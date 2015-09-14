@@ -7,10 +7,17 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # centos 6.5
   config.vm.box = "bradallenfisher/centos7"
+  
   # ip address
   config.vm.network "private_network", ip: "192.168.7.7"
+  
   # host name
   config.vm.hostname = "local.phpfpm.dev"
+  
+  # virtual box name
+  config.vm.provider "virtualbox" do |v|
+    v.name = "phpfpm_5-6-apache_2-4"
+  end
 
   # run script as root
   config.vm.provision "shell",
