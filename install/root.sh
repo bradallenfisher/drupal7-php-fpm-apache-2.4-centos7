@@ -78,3 +78,10 @@ systemctl start  mysqld.service
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 ln -s /usr/local/bin/composer /usr/bin/composer
+
+# Install node/grunt
+curl --silent --location https://rpm.nodesource.com/setup | bash -
+yum -y install nodejs
+yum -y install gcc-c++ make
+yum -y groupinstall 'Development Tools'
+npm install --global grunt-cli
