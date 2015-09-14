@@ -73,7 +73,6 @@ sudo systemctl stop firewalld.service
 systemctl start php-fpm.service
 systemctl start  mysqld.service
 systemctl start httpd.service
-systemctl start varnish.service
 
 # Install Drush globally.
 curl -sS https://getcomposer.org/installer | php
