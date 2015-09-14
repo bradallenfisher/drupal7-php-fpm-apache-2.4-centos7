@@ -19,7 +19,7 @@ yum install -y php56w php56w-fpm php56w-opcache php56w-cli php56w-common php56w-
 
 # PHP
 # The first pool
-cat /vagrant/www.conf > /etc/php-fpm.d/www.conf
+cat /vagrant/php/www.conf > /etc/php-fpm.d/www.conf
 
 #opcache settings
 cat /vagrant/php/opcache.ini > /etc/php.d/opcache.ini
@@ -36,6 +36,7 @@ cat /vagrant/modules/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat /vagrant/modules/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 
 # BASIC PERFORMANCE SETTINGS
+mkdir /etc/httpd/conf.performance.d/
 cat /vagrant/performance/compression.conf > /etc/httpd/conf.performance.d/compression.conf
 cat /vagrant/performance/content_transformation.conf > /etc/httpd/conf.performance.d/content_transformation.conf
 cat /vagrant/performance/etags.conf > /etc/httpd/conf.performance.d/etags.conf
@@ -44,11 +45,13 @@ cat /vagrant/performance/file_concatenation.conf > /etc/httpd/conf.performance.d
 cat /vagrant/performance/filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
 
 # BASIC SECURITY SETTINGS
+mkdir /etc/httpd/conf.security.d/
 cat /vagrant/security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.conf
 
 # our domain config
+mkdir /etc/httpd/conf.sites.d
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
-source domains/domain.sh
+source /vagrant/domains/domain.sh
 
 # our performance config
 echo IncludeOptional conf.performance.d/*.conf >> /etc/httpd/conf/httpd.conf
