@@ -8,21 +8,21 @@ cd $SITES_DIR
     do
       if [[ -d $d ]]
       then
-        echo $d
+        echo $d$1
         echo ------------------------
-        cat > /etc/httpd/conf.d/${d/com/conf} <<EOF
+        cat > /etc/httpd/conf.d/${d/com/conf}$1 <<EOF
         <VirtualHost *:8080>
-          ServerName $d
-          ServerAlias www.$d
-          DocumentRoot /var/www/html/$d
+          ServerName $d$1
+          ServerAlias www.$d$1
+          DocumentRoot /var/www/html/$d$1
 
-          <Directory /var/www/html/$d>
-            Include /var/www/html/$d/.htaccess
+          <Directory /var/www/html/$d$1>
+            Include /var/www/html/$d$1/.htaccess
           </Directory>
 
           # PHP-FPM Server
           <LocationMatch "^/(.*\.php(/.*)?)$">
-            ProxyPass fcgi://127.0.0.1:9000/var/www/html/$d/\$1
+            ProxyPass fcgi://127.0.0.1:9000/var/www/html/$d$1/\$1
           </LocationMatch>
 
         </VirtualHost>
