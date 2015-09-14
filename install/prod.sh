@@ -70,6 +70,10 @@ echo IncludeOptional conf.security.d/*.conf >> /etc/httpd/conf/httpd.conf
 # fix date timezone errors
 sed -i 's#;date.timezone =#date.timezone = "America/New_York"#g' /etc/php.ini
 
+firewall-cmd --permanent --add-port=80/tcp
+firewall-cmd --permanent --add-port=8080/tcp
+# firewall-cmd --permanent --add-port=NNNN/tcp
+
 # Make sue services stay on after reboot
 systemctl enable httpd.service
 systemctl enable mysqld.service
