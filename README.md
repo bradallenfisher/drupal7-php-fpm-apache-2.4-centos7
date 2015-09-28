@@ -11,5 +11,5 @@ git clone https://github.com/bradallenfisher/php-fpm-apache-2.4-centos7.git; cd 
 
 ## PROD
 ```bash
-yes | yum -y install git && git clone https://github.com/bradallenfisher/php-fpm-apache-2.4-centos7.git && cd php-fpm-apache-2.4-centos7 && chmod 700 install/prod.sh && .install/prod.sh
+yes | yum -y install git && git clone https://github.com/bradallenfisher/php-fpm-apache-2.4-centos7.git && cd php-fpm-apache-2.4-centos7 && chmod 700 install/prod.sh && install/prod.sh
 ```
