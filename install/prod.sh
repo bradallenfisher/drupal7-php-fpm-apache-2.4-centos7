@@ -30,7 +30,7 @@ sed -i 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf
 
 # PHP
 # The first pool
-cat www.conf > /etc/php-fpm.d/www.conf
+cat php/www.conf > /etc/php-fpm.d/www.conf
 
 #opcache settings
 cat php/opcache.ini > /etc/php.d/opcache.ini
@@ -47,6 +47,7 @@ cat modules/00-proxy.conf > /etc/httpd/conf.modules.d/00-proxy.conf
 cat modules/01-cgi.conf > /etc/httpd/conf.modules.d/01-cgi.conf
 
 # BASIC PERFORMANCE SETTINGS
+mkdir /etc/httpd/conf.performance.d/
 cat performance/compression.conf > /etc/httpd/conf.performance.d/compression.conf
 cat performance/content_transformation.conf > /etc/httpd/conf.performance.d/content_transformation.conf
 cat performance/etags.conf > /etc/httpd/conf.performance.d/etags.conf
@@ -55,9 +56,11 @@ cat performance/file_concatenation.conf > /etc/httpd/conf.performance.d/file_con
 cat performance/filename-based_cache_busting.conf > /etc/httpd/conf.performance.d/filename-based_cache_busting.conf
 
 # BASIC SECURITY SETTINGS
+mkdir /etc/httpd/conf.security.d/
 cat security/apache_default.conf > /etc/httpd/conf.security.d/apache_default.conf
 
 # our domain config
+mkdir /etc/httpd/conf.sites.d
 echo IncludeOptional conf.sites.d/*.conf >> /etc/httpd/conf/httpd.conf
 cat domains/8080-domain.conf > /etc/httpd/conf.sites.d/test.conf
 
@@ -70,11 +73,15 @@ echo IncludeOptional conf.security.d/*.conf >> /etc/httpd/conf/httpd.conf
 # fix date timezone errors
 sed -i 's#;date.timezone =#date.timezone = "America/New_York"#g' /etc/php.ini
 
+# FIREWALL
+systemctl start firewalld.service
+systemctl enable firewalld.service
 firewall-cmd --permanent --add-port=80/tcp
 firewall-cmd --permanent --add-port=8080/tcp
 firewall-cmd --permanent --add-port=22/tcp
 
 # Make sue services stay on after reboot
+
 systemctl enable httpd.service
 systemctl enable mysqld.service
 systemctl enable php-fpm.service
