@@ -79,6 +79,7 @@ systemctl enable firewalld.service
 firewall-cmd --permanent --add-port=80/tcp
 firewall-cmd --permanent --add-port=8080/tcp
 firewall-cmd --permanent --add-port=22/tcp
+systemctl restart firewalld.service
 
 # Make sue services stay on after reboot
 
