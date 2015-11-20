@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # install apache
-yum install nano vim wget curl git httpd -y
-
+yum install nano deltarpm vim wget curl git httpd -y
 # get some repos
 rpm -Uvh https://mirror.webtatic.com/yum/el7/epel-release.rpm
 rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
